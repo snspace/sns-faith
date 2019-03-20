@@ -1,0 +1,61 @@
+<!-- Do Keep It As Simple As Possible, For the Sake of Accessibility -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+</head>
+
+<body>
+  <div style="text-align: center;">
+    <button id='magic' onclick="go()" disabled><strong>Magic</strong></button>
+  </div>
+  <script src="public/index.js"></script>
+  <script type="text/javascript">
+    const defaults = {
+      init: true,
+      start: true,
+      EXPERIMENTAL: {},
+      preload: {
+        enabled: false,
+        addresses: []
+      },
+      config: {
+            Bootstrap: [
+            '/dns4/ams-1.bootstrap.libp2p.io/tcp/443/wss/ipfs/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd',
+            //'/dns4/lon-1.bootstrap.libp2p.io/tcp/443/wss/ipfs/QmSoLMeWqB7YGVLJN3pNLQpmmEk35v6wYtsMGLzSr5QBU3',
+            '/dns4/sfo-3.bootstrap.libp2p.io/tcp/443/wss/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM',
+            '/dns4/sgp-1.bootstrap.libp2p.io/tcp/443/wss/ipfs/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu',
+            //'/dns4/nyc-1.bootstrap.libp2p.io/tcp/443/wss/ipfs/QmSoLueR4xBeUbY9WZ9xGUUxunbKWcrNFTDAadQJmocnWm',
+            //'/dns4/nyc-2.bootstrap.libp2p.io/tcp/443/wss/ipfs/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64',
+            //'/dns4/node0.preload.ipfs.io/tcp/443/wss/ipfs/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic',
+            //'/dns4/node1.preload.ipfs.io/tcp/443/wss/ipfs/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6'
+            ]
+      }
+    }
+
+    const node = new window.Ipfs(defaults)
+
+    node.on('ready', () => {
+      Promise.all([node.id()])
+        .then(([id]) => {
+          console.log('Node ready: ' + JSON.stringify(id))
+          document.getElementById('magic').disabled = false
+          //console.log('options: ' + JSON.stringify(node._options))
+
+          node.addFromURL('https://github.com/snspace/sns-faith/blob/master/README.md', (err, result) => {
+              if (err) {
+                throw err
+              }
+              console.log(result)
+            })
+        })
+        .catch((err) => alert(err.toString()))
+    })
+  </script>
+</body>
+
+</html>
