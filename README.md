@@ -13,4 +13,23 @@ _Web(Browsers/OS)_
 
 > :top:   
 
-_Multifomats&IPLD&LibP2P_
+_JSIPFS_
+
+### Decision Making Principles
+
+- Separation of Data(Information) and App(Tool)
+- Personalization in command
+- Emphasis of Individual
+- Focus of Control and Ownership
+- Ease of Accessibility
+- Diversity via customization
+- Offline-first, Online-on-demand
+- Distributed(Peer2Peer) Gathering
+
+---
+:done:
+- ${sns-faith}: `Blank` WebPage for dropping stuff
+
+---
+:doing: --> JSIPFS state-of-art installing/upgrading and on/off switch
+

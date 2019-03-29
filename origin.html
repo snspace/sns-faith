@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SNS</title>
+</head>
+<body id='sns'>
+	<script type="text/javascript">
+
+		function loadError(oError) {
+		  throw new URIError("The script " + oError.target.src + " didn't load correctly.");
+		}
+
+		function prefixScript(url, onloadFunction) {
+		  var newScript = document.createElement("script");
+		  newScript.onerror = loadError;
+		  if (onloadFunction) { newScript.onload = onloadFunction; }
+		  document.currentScript.parentNode.insertBefore(newScript, document.currentScript);
+		  newScript.src = url;
+		}
+
+		const init = () => {
+			let snsElem = document.querySelector('#sns')
+
+		    window.SNS = {}
+
+			snsElem.style = 'height: ' + window.screen.height + 'px;'
+
+			prefixScript("../facilities/droppable/dist/droppable.umd.js", () => {
+				window.SNS.droppable = new Droppable({
+			      element: snsElem
+				})
+
+				window.SNS.droppable.onFilesDropped((files) => {
+				    console.log('Stuff were dropped:', files);
+
+				    files.forEach((item, index, array) => {
+				    	console.log('Processing ' + item.name + '[' + item.type + '] ...')
+				    })
+				})
+			})
+		}
+		
+		init()
+	</script>
+</body>
+</html>
