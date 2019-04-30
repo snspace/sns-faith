@@ -13,12 +13,15 @@
 	</style>
 </head>
 <body id='sns'>
-	<div id='welcome' class="shadowbox">
+	<div id='dropbox' class="shadowbox">
 		<p>
 			Welcome! :)
 			<hr>
-			- Dropping in your own facilities
+			=> adding or dropping new facilities
 		</p>
+		<div>
+			<ul id="facilities"></ul>
+		</div>
 	</div>
 	<script type="text/javascript">
 		function loadFile(file, onloadFunction) {
@@ -61,33 +64,34 @@
 		}
 
 		const init = () => {
-		  window.SNS = {}
+		  window.SNS = {
+		  	"name": "Super Nerd Space",
+		  	"abstract": "InterPlanetary Digital Residence",
+		  	"facilities": {}
+		  }
 
-			let snsElem = document.querySelector('#sns')
-
-			snsElem.style = 'height: ' + window.screen.height + 'px;'
+			let dropboxElem = document.querySelector('#dropbox')
 
 			loadFile({ "scriptURL": "droppable.umd.js" }, () => {
-				window.SNS.droppable = new Droppable({
-			      element: snsElem
+				window.SNS.facilities.droppable = new Droppable({
+			      element: dropboxElem
 				})
 
-				window.SNS.droppable.onFilesDropped((files) => {
+				window.SNS.facilities.droppable.onFilesDropped((files) => {
 				    console.log('Stuff were dropped:', files);
 
 				    files.forEach((item, index, array) => {
 				    	console.log('Processing ' + item.name + '[' + item.type + '] ...')
 
-              loadFile(item)
-				    	/*switch (item.type) {
-				    		case 'text/javascript': 
-				    		  loadSrc('script', URL.createObjectURL(item.slice()), () => console.log('loaded: ' + item.name))
-				    		  break
-				    		case 'text/css':
-				    		  loadSrc('style', URL.createObjectURL(item.slice()), () => console.log('loaded: ' + item.name));
-				    		  break
-				    		default: alert('Ignored: ' + item.name + ', the type ' + item.type + ' is not supported.')
-				    	}*/
+              loadFile(item, () => {
+              	let element = document.createElement('a')
+              	let liElem = document.createElement('li')
+
+                element.setAttribute('href', '#')
+              	element.innerHTML = item.name + '[' + item.type + ']'
+              	liElem.append(element)
+              	document.querySelector('#facilities').append(liElem)
+              })
 				    })
 				})
 			})
