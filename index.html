@@ -1,1 +1,99 @@
-<script src="void()"></script>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SNS: Super Nerd Space, InterPlanetary Digital Residence</title>
+	<style type="text/css">
+		.shadowbox {
+		  width: 15em;
+		  border: 1px solid #333;
+		  box-shadow: 8px 8px 5px #555;
+		  padding: 8px 12px;
+		  background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
+		}
+	</style>
+</head>
+<body id='sns'>
+	<div id='welcome' class="shadowbox">
+		<p>
+			Welcome! :)
+			<hr>
+			- Dropping in your own facilities
+		</p>
+	</div>
+	<script type="text/javascript">
+		function loadFile(file, onloadFunction) {
+			const fileType = (file.scriptURL || file.type === 'text/javascript') ? 'script' : (file.type === 'text/css' ? 'style' : undefined)
+
+			if (!fileType) {
+				return
+			}
+
+		  let newLoadedElem
+
+      switch (fileType) {
+      	case 'script':
+      	  newLoadedElem = document.createElement('script');
+      		newLoadedElem.type = 'text/javascript'
+      		document.currentScript ? 
+				  document.currentScript.parentNode.insertBefore(newLoadedElem, document.currentScript) :
+				  document.body.append(newLoadedElem)
+				  newLoadedElem.src = file.scriptURL || URL.createObjectURL(file.slice())
+				  break
+      	case 'style':
+      	  newLoadedElem = document.createElement('style');
+      		newLoadedElem.type = 'text/css'
+      		new Response(file.slice())
+      		.text()
+      		.then((content) => {
+      			newLoadedElem.innerHTML = content
+      		})
+      		document.head.append(newLoadedElem)
+      		break
+      }
+
+		  newLoadedElem.onerror = () => {
+		  	throw new URIError("The script " + oError.target.src + " didn't load correctly.")
+		  }
+
+		  if (onloadFunction) {
+		  	newLoadedElem.onload = onloadFunction
+		  }
+		}
+
+		const init = () => {
+		  window.SNS = {}
+
+			let snsElem = document.querySelector('#sns')
+
+			snsElem.style = 'height: ' + window.screen.height + 'px;'
+
+			loadFile({ "scriptURL": "droppable.umd.js" }, () => {
+				window.SNS.droppable = new Droppable({
+			      element: snsElem
+				})
+
+				window.SNS.droppable.onFilesDropped((files) => {
+				    console.log('Stuff were dropped:', files);
+
+				    files.forEach((item, index, array) => {
+				    	console.log('Processing ' + item.name + '[' + item.type + '] ...')
+
+              loadFile(item)
+				    	/*switch (item.type) {
+				    		case 'text/javascript': 
+				    		  loadSrc('script', URL.createObjectURL(item.slice()), () => console.log('loaded: ' + item.name))
+				    		  break
+				    		case 'text/css':
+				    		  loadSrc('style', URL.createObjectURL(item.slice()), () => console.log('loaded: ' + item.name));
+				    		  break
+				    		default: alert('Ignored: ' + item.name + ', the type ' + item.type + ' is not supported.')
+				    	}*/
+				    })
+				})
+			})
+		}
+		
+		init()
+	</script>
+</body>
+</html>
