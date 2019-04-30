@@ -1,4 +1,4 @@
-# sns-faith: Faithfully Web-based Super Nerd Space
+# sns-faith: Faithfully Web-based [Super Nerd Space](https://github.com/snspace/sns)
 
 ### Forwarding
 ---
