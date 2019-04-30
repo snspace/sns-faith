@@ -1,7 +1,13 @@
-# sns-faith
-Primitive&amp;Simple Implementation of Super Nerd Space
+# sns-faith: Primitive&amp;Simple Implementation of Super Nerd Space
 
-## _Stack_
+### Forwarding
+---
+:doing:
+- IBIPFS: Be All I(PFS) Can Be In Browser // on|off switch?
+
+---
+:done:
+- origin: `Blank` WebPage for dropping stuff
 
 ### _Faith(Primitive&Simple&Stable)_
 
@@ -25,11 +31,3 @@ _JSIPFS_
 - Diversity via customization
 - Offline-first, Online-on-demand
 - Distributed(Peer2Peer) Gathering
-
----
-:done:
-- ${sns-faith}: `Blank` WebPage for dropping stuff
-
----
-:doing: --> JSIPFS state-of-art installing/upgrading and on/off switch
-
