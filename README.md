@@ -1,4 +1,4 @@
-# sns-faith: Primitive&amp;Simple Implementation of Super Nerd Space
+# sns-faith: Faithfully Web-based Super Nerd Space
 
 ### Forwarding
 ---
@@ -7,6 +7,7 @@
 
 ---
 :done:
+- adding or dropping new facilities(css&js)
 - origin: `Blank` WebPage for dropping stuff
 
 ### _Faith(Primitive&Simple&Stable)_
