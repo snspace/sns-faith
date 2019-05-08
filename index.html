@@ -13,18 +13,61 @@
 	</style>
 </head>
 <body id='sns'>
-	<div id='dropbox' class="shadowbox">
+	<div class="shadowbox">
 		<p>
 			Welcome! :)
+			<ul>
+				<li>ibipfs.js <button id="switch" onclick="switchIBIPFS()" disabled>ON</button></li>
+			</ul>
+		</p>
+		<div id='dropbox'>
 			<hr>
 			=> adding or dropping new facilities
-		</p>
-		<div>
 			<ul id="facilities"></ul>
+			<br>
+			<br>
+			<br>
 		</div>
 	</div>
 	<script type="text/javascript">
-		function loadFile(file, onloadFunction) {
+		const switchElem = document.querySelector('#switch')
+
+		const switchIBIPFS = () => {
+
+			if (!window.ibipfs) {
+				loadFile({ "scriptURL": "ibipfs.js"})
+
+				return
+			}
+
+			if ('ON' === switchElem.innerHTML) {
+				window.ibipfs
+				.start()
+				.then(() => {				
+				  switchElem.innerHTML = 'OFF'
+				})
+				.catch((err) => {
+					alert('Error@switchIBIPFS-ON: ' + err)
+
+					switchElem.disabled = true
+				})
+			} else if ('OFF' === switchElem.innerHTML) {
+				window.ibipfs
+				.stop()
+				.then(() => {
+					document.body.setAttribute('style', 'background-image: none;')
+
+					switchElem.innerHTML = 'ON'
+				})
+				.catch((err) => {				
+					alert('Error@switchIBIPFS-OFF: ' + err)
+
+					switchElem.disabled = true
+				})
+			}
+		}
+
+		const loadFile = (file, onloadFunction) => {
 			const fileType = (file.scriptURL || file.type === 'text/javascript') ? 'script' : (file.type === 'text/css' ? 'style' : undefined)
 
 			if (!fileType) {
@@ -94,6 +137,31 @@
               })
 				    })
 				})
+
+				window.addEventListener('ibipfs_cancel', () => {
+					switchElem.innerHTML = 'ON'
+
+					switchElem.disabled = false
+				})
+
+				window.addEventListener('ibipfs', () => {
+	      	window.ibipfs && window.ibipfs.on('start', () => {
+	      		switchElem.innerHTML = 'OFF'
+	      		switchElem.disabled = false
+
+		      	window.ibipfs
+			    		.cat('QmZCWqxc3fzvqVLhL64yweZhuWoLeqP5iUNtLqkb5rX7NR', (err, file) => {
+			  				if (err) {
+			  					console.log('Error: ' + err)
+			  					return
+			  				}
+
+			  				document.body.setAttribute('style', 'background-image: url(data:image/jpg;base64,' + file.toString('base64') + '); background-color: transparent;')
+			  			})
+		      })
+	      })
+	      
+	      loadFile({ "scriptURL": "ibipfs.js"})
 			})
 		}
 		

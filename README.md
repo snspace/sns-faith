@@ -3,11 +3,15 @@
 ### Forwarding
 ---
 :doing:
-- IBIPFS: Be All I(PFS) Can Be In Browser // on|off switch?
+- if a.k.a ifacility - Protocol for Facilities
+- facility - iProfile: The Elegant Profile, Everyone's Personal Profile // inline editor?
 
 ---
 :done:
-- adding or dropping new facilities(css&js)
+---
+`v 0.0.0` - origin - PoC
+- facility - IBIPFS: Be All I(PFS) Can Be In Browser // on|off switch?
+- adding or dropping new facilities `trial(css&js)`
 - origin: `Blank` WebPage for dropping stuff
 
 ### _Faith(Primitive&Simple&Stable)_
